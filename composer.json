@@ -1,0 +1,39 @@
+{
+    "name": "bedlate/laravel-jwt",
+    "description": "JSON Web Token Authentication for Laravel",
+    "keywords": [
+        "jwt",
+        "laravel jwt",
+        "auth",
+        "authentication",
+        "json web token",
+        "laravel"
+    ],
+    "homepage": "https://github.com/bedlate/laravel-jwt",
+    "support": {
+        "issues": "https://github.com/bedlate/laravel-jwt/issues",
+        "source": "https://github.com/bedlate/laravel-jwt"
+    },
+    "require": {
+        "lcobucci/jwt": "^3.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "bedlate",
+            "email": "bedlate@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "bedlate\\JWT\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "bedlate\\JWT\\JWTServiceProvider"
+            ]
+        }
+    }
+}
