@@ -5,6 +5,7 @@ namespace bedlate\JWT;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\ValidationData;
 
 /**
  * Class JWT
@@ -49,8 +50,20 @@ class JWT
      * @return bool
      */
     public function verify() {
+        if (!$this->validate()) {
+            return false;
+        }
         $signer = new Sha256();
         return $this->token->verify($signer, $this->getKey($this->getIdentifier(), $this->getExpire()));
+    }
+
+    /**
+     * validate data
+     * @return bool
+     */
+    public function validate() {
+        $data = new ValidationData();
+        return $this->token->validate($data);
     }
 
     /**
