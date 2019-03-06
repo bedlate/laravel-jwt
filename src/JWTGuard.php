@@ -47,7 +47,7 @@ class JWTGuard implements Guard
         if (null !== $this->user) {
             return $this->user;
         }
-        $token = $this->getToken();
+        $token = $this->getTokenStr();
         $jwt = $this->jwt->decode($token);
         if ($jwt->verify() && ($uid = $jwt->getIdentifier())) {
             return $this->user = $this->provider->retrieveById($uid);
@@ -95,6 +95,14 @@ class JWTGuard implements Guard
     }
 
     /**
+     * Refresh token for current user
+     * @return array
+     */
+    public function refresh() {
+        return $this->login($this->user);
+    }
+
+    /**
      * Determine if the user matches the credentials.
      *
      * @param  mixed  $user
@@ -106,7 +114,11 @@ class JWTGuard implements Guard
         return ! is_null($user) && $this->provider->validateCredentials($user, $credentials);
     }
 
-    protected function getToken()
+    /**
+     * Get token from query string or header
+     * @return mixed
+     */
+    protected function getTokenStr()
     {
         $query = config('jwt.query');
         if ($this->request->has($query)) {

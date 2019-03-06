@@ -35,5 +35,8 @@
                 "bedlate\\JWT\\JWTServiceProvider"
             ]
         }
+    },
+    "require-dev": {
+        "laravel/laravel": "^5.8"
     }
 }

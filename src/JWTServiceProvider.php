@@ -2,6 +2,7 @@
 
 namespace bedlate\JWT;
 
+use bedlate\JWT\Console\JWTKengen;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,6 +16,7 @@ class JWTServiceProvider extends ServiceProvider {
     public function register()
     {
         $this->registerJWT();
+        $this->commands(JWTKengen::class);
     }
 
     /**
