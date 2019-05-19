@@ -40,7 +40,8 @@ class JWT
      * @param $token
      * @return $this
      */
-    public function decode($token) {
+    public function decode($token)
+    {
         $this->token = (new Parser())->parse($token);
         return $this;
     }
@@ -49,7 +50,8 @@ class JWT
      * verify sign
      * @return bool
      */
-    public function verify() {
+    public function verify()
+    {
         if (!$this->validate()) {
             return false;
         }
@@ -61,7 +63,8 @@ class JWT
      * validate data
      * @return bool
      */
-    public function validate() {
+    public function validate()
+    {
         $data = new ValidationData();
         return $this->token->validate($data);
     }
@@ -70,7 +73,8 @@ class JWT
      * response to api
      * @return array
      */
-    public function response() {
+    public function response()
+    {
         $exp = $this->getExpire();
         return [
             'token' => (string)($this->token),
@@ -82,7 +86,8 @@ class JWT
      * get JWT token
      * @return \Lcobucci\JWT\Token
      */
-    public function getToken() {
+    public function getToken()
+    {
         return $this->token;
     }
 
@@ -90,7 +95,8 @@ class JWT
      * get identifier
      * @return mixed
      */
-    public function getIdentifier() {
+    public function getIdentifier()
+    {
         return $this->token->getClaim(self::IDENTIFIER);
     }
 
@@ -98,7 +104,8 @@ class JWT
      * get expire time
      * @return mixed
      */
-    protected function getExpire() {
+    protected function getExpire()
+    {
         return $this->token->getClaim('exp');
     }
 
@@ -108,8 +115,14 @@ class JWT
      * @param $exp
      * @return string
      */
-    private function getKey($identifier, $exp) {
+    private function getKey($identifier, $exp)
+    {
         return 'key=' . config('jwt.key') . '&identifier=' . $identifier . '&exp=' . $exp;
     }
 
+    public function fromUser($user)
+    {
+        $identifier = $user->getAuthIdentifier();
+        return $this->encode($identifier)->response();
+    }
 }
