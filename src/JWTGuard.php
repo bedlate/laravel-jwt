@@ -8,7 +8,6 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Traits\Macroable;
-use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * Class JWTGuard
