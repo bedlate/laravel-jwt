@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Traits\Macroable;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * Class JWTGuard
@@ -48,7 +49,10 @@ class JWTGuard implements Guard
             return $this->user;
         }
         $token = $this->getTokenStr();
-        if (null == $token) return null;
+
+        if ($token == null) {
+            return null;
+        }
         $jwt = $this->jwt->decode($token);
         if ($jwt->verify() && ($uid = $jwt->getIdentifier())) {
             return $this->user = $this->provider->retrieveById($uid);
@@ -99,7 +103,8 @@ class JWTGuard implements Guard
      * Refresh token for current user
      * @return array
      */
-    public function refresh() {
+    public function refresh()
+    {
         return $this->login($this->user);
     }
 
@@ -112,7 +117,7 @@ class JWTGuard implements Guard
      */
     protected function hasValidCredentials($user, $credentials)
     {
-        return ! is_null($user) && $this->provider->validateCredentials($user, $credentials);
+        return !is_null($user) && $this->provider->validateCredentials($user, $credentials);
     }
 
     /**
@@ -130,4 +135,10 @@ class JWTGuard implements Guard
         return $token;
     }
 
+    public function tokenById(int $id)
+    {
+        if ($this->user = $this->provider->retrieveById($id)) {
+            return $this->jwt->fromUser($this->user);
+        }
+    }
 }
